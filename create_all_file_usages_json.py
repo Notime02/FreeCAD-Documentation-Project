@@ -1,9 +1,4 @@
-import requests
-import json
-
-# FreeCAD Wiki API URL
-api_url = "https://wiki.freecad.org/api.php"
-
+# ... (truncated) ...
 # Define API parameters
 params = {
     "action": "query",
@@ -44,14 +39,4 @@ while True:
     # Check if the API has a "continue" parameter to get more data
     if 'continue' in data:
         next_request_params = data['continue']
-        print(f"Continue parameter found: {next_request_params}. Preparing the next request...\n")
-    else:
-        print("All file usages have been retrieved!")
-        break  # Exit the loop if there are no more file usages
-
-# Save the result to a JSON file
-with open('all_file_usages.json', 'w', encoding='utf-8') as f:
-    json.dump(all_file_usages, f, ensure_ascii=False, indent=4)
-
-print(f"\nAll file usages successfully saved to 'all_file_usages.json'.")
-print(f"Total number of file usages retrieved: {total_files}")
+# ... (truncated) ...
