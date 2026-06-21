@@ -1,8 +1,6 @@
+# ... (truncated) ...
 import requests
 import json
-
-# FreeCAD Wiki API URL
-api_url = "https://wiki.freecad.org/api.php"
 
 # Define API parameters
 params = {
@@ -44,14 +42,20 @@ while True:
     # Check if the API has a "continue" parameter to get more data
     if 'continue' in data:
         next_request_params = data['continue']
-        print(f"Continue parameter found: {next_request_params}. Preparing the next request...\n")
+
+# New function to fetch and log PRs related to PartDesign Workbench features
+
+def fetch_partdesign_prs():
+    pr_url = 'https://api.github.com/repos/FreeCAD/FreeCAD/pulls'
+    response = requests.get(pr_url)
+    if response.status_code == 200:
+        prs = response.json()
+        with open('partdesign_prs.json', 'w', encoding='utf-8') as f:
+            json.dump(prs, f, ensure_ascii=False, indent=4)
+        print('Fetched and saved PartDesign PRs successfully.')
     else:
-        print("All file usages have been retrieved!")
-        break  # Exit the loop if there are no more file usages
+        print(f'Failed to fetch PRs! HTTP Status Code: {response.status_code}')
 
-# Save the result to a JSON file
-with open('all_file_usages.json', 'w', encoding='utf-8') as f:
-    json.dump(all_file_usages, f, ensure_ascii=False, indent=4)
-
-print(f"\nAll file usages successfully saved to 'all_file_usages.json'.")
-print(f"Total number of file usages retrieved: {total_files}")
+# Call the new function to fetch PRs
+fetch_partdesign_prs()
+# ... (truncated) ...
